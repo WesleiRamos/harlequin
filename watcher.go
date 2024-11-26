@@ -47,9 +47,8 @@ func watchFilesChange() {
 			}
 
 			debounced(func() {
-				log.Print("\033[H\033[2J")
 				runner.Kill()
-				runner.Run()
+				go runner.Run()
 			})
 
 		case err, ok := <-watcher.Errors:
@@ -69,6 +68,7 @@ func WatchFiles() {
 		log.Fatal(err)
 	}
 
+	go runner.Run()
 	go watchFilesChange()
 	<-make(chan struct{})
 }

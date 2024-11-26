@@ -12,9 +12,10 @@ func main() {
 	project = GetProject()
 	runner = CreateRunner(project.GetRunnerCode())
 	defer os.Remove(runner.file.Name())
-	runner.Run()
 
 	if *watch {
 		WatchFiles()
+	} else {
+		runner.Run()
 	}
 }

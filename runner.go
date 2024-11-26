@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -28,12 +27,12 @@ func CreateRunner(code string) *Runner {
 }
 
 func (self *Runner) Run() {
+	log.Print("\033[H\033[2J")
+
 	self.cmd = exec.Command("joker", self.args...)
 	self.cmd.Stdout = os.Stdout
 	self.cmd.Stderr = os.Stderr
-	if err := self.cmd.Run(); err != nil {
-		fmt.Fprintln(os.Stderr, "\nFailed to run:", err)
-	}
+	self.cmd.Run()
 }
 
 func (self *Runner) Kill() {
