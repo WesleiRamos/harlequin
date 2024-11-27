@@ -1,21 +1,31 @@
 package main
 
 import (
-	"flag"
+	"log"
 	"os"
 )
 
 func main() {
-	watch := flag.Bool("watch", false, "Watch files changes")
-	flag.Parse()
+	project = NewProject()
 
-	project = GetProject()
+	if new := GetArg("new"); new.index != -1 {
+		projectName, err := new.Value(1)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		project.NewProject(projectName)
+		return
+	}
+
+	project.GetCurrentProject()
 	runner = CreateRunner(project.GetRunnerCode())
 	defer os.Remove(runner.file.Name())
 
-	if *watch {
+	if watch := GetArg("watch"); watch.index != -1 {
 		WatchFiles()
-	} else {
-		runner.Run()
+		return
 	}
+
+	runner.Run()
 }

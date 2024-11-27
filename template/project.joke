@@ -1,0 +1,4 @@
+(defproject :name ""
+  :description ""
+  :source-path "src"
+  :main '{{ PROJECT_NAME }}.main)

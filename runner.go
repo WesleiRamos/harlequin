@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -27,7 +28,7 @@ func CreateRunner(code string) *Runner {
 }
 
 func (self *Runner) Run() {
-	log.Print("\033[H\033[2J")
+	fmt.Printf("\033[H\033[2J")
 
 	self.cmd = exec.Command("joker", self.args...)
 	self.cmd.Stdout = os.Stdout
